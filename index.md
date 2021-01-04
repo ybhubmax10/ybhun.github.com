@@ -1,37 +1,24 @@
-## Welcome to GitHub Pages
+import Game from "/src/game";
 
-You can use the [editor on GitHub](https://github.com/ybhubmax10/ybhun.github.com/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+let canvas = document.getElementById("gameScreen");
+let ctx = canvas.getContext("2d");
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+const GAME_WIDTH = 800;
+const GAME_HEIGHT = 600;
 
-### Markdown
+let game = new Game(GAME_WIDTH, GAME_HEIGHT);
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+let lastTime = 0;
+function gameLoop(timestamp) {
+  let deltaTime = timestamp - lastTime;
+  lastTime = timestamp;
 
-```markdown
-Syntax highlighted code block
+  ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-# Header 1
-## Header 2
-### Header 3
+  game.update(deltaTime);
+  game.draw(ctx);
 
-- Bulleted
-- List
+  requestAnimationFrame(gameLoop);
+}
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/ybhubmax10/ybhun.github.com/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+requestAnimationFrame(gameLoop);
